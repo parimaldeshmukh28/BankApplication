@@ -3,6 +3,7 @@ package com.banking.bankApplication.services;
 import java.util.List;
 
 import com.banking.bankApplication.model.Customer;
+import com.banking.bankApplication.model.CustomerPatchRequest;
 
 public interface CustomerService {
 
@@ -12,12 +13,7 @@ public interface CustomerService {
 
 	public void deleteCustomerbyId(int cid);
 
-	public Customer changeCustomerAddress(int cid, Customer customer);
-
-	public Customer changeCustomerAddress(String address);
-
 	public void updateCustomer(Customer customer);
 
-	public void updateCustomerValues(int cid, Customer customer);
-
+	public void updateCustomerValues(CustomerPatchRequest customer);
 }

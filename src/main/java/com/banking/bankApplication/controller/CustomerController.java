@@ -3,6 +3,7 @@ package com.banking.bankApplication.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.banking.bankApplication.model.Customer;
+import com.banking.bankApplication.model.CustomerPatchRequest;
 import com.banking.bankApplication.services.CustomerService;
 
 @RestController
 @RequestMapping("/customers")
+@Validated
 public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
@@ -29,7 +32,7 @@ public class CustomerController {
 		System.out.println("In Controller layer :" + clist);
 		return clist;
 	}
-
+	
 	@PostMapping
 	public String addCustomer(@RequestBody Customer customer) {
 		System.out.println("check customer :" + customer);
@@ -43,15 +46,18 @@ public class CustomerController {
 		return "deleted Successfully";
 	}
 
-	@PutMapping(value = "")
+	@PutMapping
 	public String updateCustomerObject(@RequestBody Customer customer) {
+		if(customer !=null && customer.getCid() == 0) {
+			return "CID mandatory";
+		}
 		customerService.updateCustomer(customer);
 		return "customer changed";
 	}
 	
-	@PatchMapping(value="/{cid}")
-	public String  updateCustomer(@PathVariable("cid") int cid, @RequestBody Customer customer){
-		customerService.updateCustomerValues(cid, customer);
+	@PatchMapping
+	public String  updateCustomer(@RequestBody CustomerPatchRequest customer){
+		customerService.updateCustomerValues(customer);
 		return "customer updated";
 	}
 

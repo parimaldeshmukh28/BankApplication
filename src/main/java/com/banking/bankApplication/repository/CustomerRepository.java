@@ -7,7 +7,4 @@ import com.banking.bankApplication.model.Customer;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
-
-	public Customer findCustomerByAddres(String address);
-
 }
